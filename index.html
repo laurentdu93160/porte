@@ -107,6 +107,7 @@
     }
 
     function checkCode() {
+      console.log("Code saisi :", code);  // 👈 affichage dans F12 console
       const display = document.getElementById("display");
       if (code === correctCode) {
         document.getElementById("message").textContent = "✅ Code correct ! Porte ouverte";
@@ -119,8 +120,10 @@
         display.classList.add("incorrect");
         display.classList.remove("correct");
       }
-      code = "";
-      updateDisplay();
+      setTimeout(() => {
+        code = "";
+        updateDisplay();
+      }, 1000);
     }
   </script>
 </body>
