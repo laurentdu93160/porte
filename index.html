@@ -13,36 +13,44 @@
       align-items: center;
       margin: 0;
     }
+
     .container {
       background: white;
       padding: 20px;
       border-radius: 12px;
       box-shadow: 0 0 20px rgba(0,0,0,0.1);
       text-align: center;
+      transition: border 0.3s ease;
+      border: 4px solid transparent;
     }
+
+    .container.correct {
+      border-color: green;
+    }
+
+    .container.incorrect {
+      border-color: red;
+    }
+
     .display {
       font-size: 2em;
       margin-bottom: 20px;
       padding: 10px;
-      border: 4px solid gray;
+      border: 2px solid gray;
       background: #e0ffe0;
       width: 160px;
-      margin: 0 auto;
+      margin: 0 auto 20px;
       border-radius: 8px;
       transition: border-color 0.3s ease;
     }
-    .display.correct {
-      border-color: green;
-    }
-    .display.incorrect {
-      border-color: red;
-    }
+
     .keypad {
       display: grid;
       grid-template-columns: repeat(3, 60px);
       gap: 10px;
       justify-content: center;
     }
+
     .keypad button {
       padding: 15px;
       font-size: 1.2em;
@@ -52,9 +60,11 @@
       border-radius: 6px;
       transition: background 0.3s ease;
     }
+
     .keypad button:hover {
       background: #ddd;
     }
+
     .message {
       margin-top: 15px;
       font-size: 1em;
@@ -63,7 +73,7 @@
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="container" id="container">
     <div class="display" id="display">----</div>
     <div class="keypad">
       <button onclick="press('1')">1</button>
@@ -102,24 +112,28 @@
       code = "";
       updateDisplay();
       document.getElementById("message").textContent = "";
-      const display = document.getElementById("display");
-      display.classList.remove("correct");
-      display.classList.remove("incorrect");
+      document.getElementById("message").style.color = "black";
+
+      const container = document.getElementById("container");
+      container.classList.remove("correct");
+      container.classList.remove("incorrect");
     }
 
     function checkCode() {
       console.log("🔎 Code saisi :", code);
-      const display = document.getElementById("display");
+      const container = document.getElementById("container");
+      const message = document.getElementById("message");
+
       if (code === correctCode) {
-        document.getElementById("message").textContent = "✅ Code correct ! Porte ouverte";
-        document.getElementById("message").style.color = "green";
-        display.classList.add("correct");
-        display.classList.remove("incorrect");
+        message.textContent = "✅ Code correct ! Porte ouverte";
+        message.style.color = "green";
+        container.classList.add("correct");
+        container.classList.remove("incorrect");
       } else {
-        document.getElementById("message").textContent = "❌ Code incorrect";
-        document.getElementById("message").style.color = "red";
-        display.classList.add("incorrect");
-        display.classList.remove("correct");
+        message.textContent = "❌ Code incorrect";
+        message.style.color = "red";
+        container.classList.add("incorrect");
+        container.classList.remove("correct");
       }
 
       setTimeout(() => {
