@@ -6,7 +6,7 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f7f7f7;
+      background-color: #f0fdf0;
       height: 100vh;
       display: flex;
       justify-content: center;
@@ -16,19 +16,21 @@
 
     .container {
       background: white;
-      padding: 20px;
-      border-radius: 12px;
+      padding: 25px;
+      border-radius: 16px;
       box-shadow: 0 0 20px rgba(0,0,0,0.1);
       text-align: center;
-      transition: border 0.3s ease;
-      border: 4px solid transparent;
+      transition: background-color 0.4s ease, border-color 0.4s ease;
+      border: 5px solid transparent;
     }
 
     .container.correct {
-      border-color: green;
+      background-color: #d5ffd5;
+      border-color: #2ecc71;
     }
 
     .container.incorrect {
+      background-color: #ffe5e5;
       border-color: red;
     }
 
@@ -36,12 +38,11 @@
       font-size: 2em;
       margin-bottom: 20px;
       padding: 10px;
-      border: 2px solid gray;
-      background: #e0ffe0;
+      border: 2px solid #ccc;
+      background: #f8fff8;
       width: 160px;
       margin: 0 auto 20px;
       border-radius: 8px;
-      transition: border-color 0.3s ease;
     }
 
     .keypad {
@@ -111,12 +112,10 @@
     function clearCode() {
       code = "";
       updateDisplay();
-      document.getElementById("message").textContent = "";
-      document.getElementById("message").style.color = "black";
-
       const container = document.getElementById("container");
-      container.classList.remove("correct");
-      container.classList.remove("incorrect");
+      const message = document.getElementById("message");
+      message.textContent = "";
+      container.classList.remove("correct", "incorrect");
     }
 
     function checkCode() {
