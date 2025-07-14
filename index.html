@@ -24,11 +24,18 @@
       font-size: 2em;
       margin-bottom: 20px;
       padding: 10px;
-      border: 2px solid green;
+      border: 4px solid gray;
       background: #e0ffe0;
       width: 160px;
       margin: 0 auto;
       border-radius: 8px;
+      transition: border-color 0.3s ease;
+    }
+    .display.correct {
+      border-color: green;
+    }
+    .display.incorrect {
+      border-color: red;
     }
     .keypad {
       display: grid;
@@ -94,15 +101,23 @@
       code = "";
       updateDisplay();
       document.getElementById("message").textContent = "";
+      const display = document.getElementById("display");
+      display.classList.remove("correct");
+      display.classList.remove("incorrect");
     }
 
     function checkCode() {
+      const display = document.getElementById("display");
       if (code === correctCode) {
         document.getElementById("message").textContent = "✅ Code correct ! Porte ouverte";
         document.getElementById("message").style.color = "green";
+        display.classList.add("correct");
+        display.classList.remove("incorrect");
       } else {
         document.getElementById("message").textContent = "❌ Code incorrect";
         document.getElementById("message").style.color = "red";
+        display.classList.add("incorrect");
+        display.classList.remove("correct");
       }
       code = "";
       updateDisplay();
