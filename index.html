@@ -20,13 +20,14 @@
       border-radius: 16px;
       box-shadow: 0 0 20px rgba(0,0,0,0.1);
       text-align: center;
-      transition: background-color 0.4s ease, border-color 0.4s ease, transform 0.2s ease;
+      transition: background-color 0.4s ease, border-color 0.4s ease;
       border: 5px solid transparent;
     }
 
     .container.correct {
       background-color: #d5ffd5;
       border-color: #2ecc71;
+      animation: buzz 0.4s ease;
     }
 
     .container.incorrect {
@@ -39,11 +40,7 @@
       25%  { transform: rotate(-1deg); }
       50%  { transform: rotate(1deg); }
       75%  { transform: rotate(-1deg); }
-      100% { transform: rotate(0deg); }
-    }
-
-    .buzz {
-      animation: buzz 0.4s ease;
+      100% { transform: rotate(0); }
     }
 
     .display {
@@ -133,7 +130,7 @@
       const message = document.getElementById("message");
       message.textContent = "";
       message.style.color = "black";
-      container.classList.remove("correct", "incorrect", "buzz");
+      container.classList.remove("correct", "incorrect");
     }
 
     function checkCode() {
@@ -144,15 +141,16 @@
       if (code === correctCode) {
         message.textContent = "✅ Code correct ! Porte ouverte";
         message.style.color = "green";
-        container.classList.add("correct", "buzz");
+        container.classList.add("correct");
         container.classList.remove("incorrect");
 
-        correctCode = generateCode();  // nouveau code après succès
+        // Nouveau code après succès
+        correctCode = generateCode();
       } else {
         message.textContent = "❌ Code incorrect";
         message.style.color = "red";
         container.classList.add("incorrect");
-        container.classList.remove("correct", "buzz");
+        container.classList.remove("correct");
       }
 
       setTimeout(() => {
