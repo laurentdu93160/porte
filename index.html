@@ -20,7 +20,7 @@
       border-radius: 16px;
       box-shadow: 0 0 20px rgba(0,0,0,0.1);
       text-align: center;
-      transition: background-color 0.4s ease, border-color 0.4s ease;
+      transition: background-color 0.4s ease, border-color 0.4s ease, transform 0.2s ease;
       border: 5px solid transparent;
     }
 
@@ -32,6 +32,18 @@
     .container.incorrect {
       background-color: #ffe5e5;
       border-color: red;
+    }
+
+    @keyframes buzz {
+      0%   { transform: rotate(1deg); }
+      25%  { transform: rotate(-1deg); }
+      50%  { transform: rotate(1deg); }
+      75%  { transform: rotate(-1deg); }
+      100% { transform: rotate(0deg); }
+    }
+
+    .buzz {
+      animation: buzz 0.4s ease;
     }
 
     .display {
@@ -95,8 +107,13 @@
 
   <script>
     let code = "";
-    const correctCode = Math.floor(1000 + Math.random() * 9000).toString();
-    console.log("🔐 Nouveau code généré :", correctCode);
+    let correctCode = generateCode();
+
+    function generateCode() {
+      const newCode = Math.floor(1000 + Math.random() * 9000).toString();
+      console.log("🔐 Nouveau code généré :", newCode);
+      return newCode;
+    }
 
     function press(num) {
       if (code.length < 4) {
@@ -115,7 +132,8 @@
       const container = document.getElementById("container");
       const message = document.getElementById("message");
       message.textContent = "";
-      container.classList.remove("correct", "incorrect");
+      message.style.color = "black";
+      container.classList.remove("correct", "incorrect", "buzz");
     }
 
     function checkCode() {
@@ -126,13 +144,15 @@
       if (code === correctCode) {
         message.textContent = "✅ Code correct ! Porte ouverte";
         message.style.color = "green";
-        container.classList.add("correct");
+        container.classList.add("correct", "buzz");
         container.classList.remove("incorrect");
+
+        correctCode = generateCode();  // nouveau code après succès
       } else {
         message.textContent = "❌ Code incorrect";
         message.style.color = "red";
         container.classList.add("incorrect");
-        container.classList.remove("correct");
+        container.classList.remove("correct", "buzz");
       }
 
       setTimeout(() => {
