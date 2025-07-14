@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Digicode - Porte</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+    }
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .display {
+      font-size: 2em;
+      margin-bottom: 20px;
+      padding: 10px;
+      border: 2px solid green;
+      background: #e0ffe0;
+      width: 160px;
+      margin: 0 auto;
+      border-radius: 8px;
+    }
+    .keypad {
+      display: grid;
+      grid-template-columns: repeat(3, 60px);
+      gap: 10px;
+      justify-content: center;
+    }
+    .keypad button {
+      padding: 15px;
+      font-size: 1.2em;
+      cursor: pointer;
+      background: #eee;
+      border: none;
+      border-radius: 6px;
+      transition: background 0.3s ease;
+    }
+    .keypad button:hover {
+      background: #ddd;
+    }
+    .message {
+      margin-top: 15px;
+      font-size: 1em;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="display" id="display">----</div>
+    <div class="keypad">
+      <button onclick="press('1')">1</button>
+      <button onclick="press('2')">2</button>
+      <button onclick="press('3')">3</button>
+      <button onclick="press('4')">4</button>
+      <button onclick="press('5')">5</button>
+      <button onclick="press('6')">6</button>
+      <button onclick="press('7')">7</button>
+      <button onclick="press('8')">8</button>
+      <button onclick="press('9')">9</button>
+      <button onclick="clearCode()">C</button>
+      <button onclick="press('0')">0</button>
+      <button onclick="checkCode()">OK</button>
+    </div>
+    <div class="message" id="message"></div>
+  </div>
+
+  <script>
+    let code = "";
+    const correctCode = "1234";
+
+    function press(num) {
+      if (code.length < 4) {
+        code += num;
+        updateDisplay();
+      }
+    }
+
+    function updateDisplay() {
+      document.getElementById("display").textContent = code.padEnd(4, "-");
+    }
+
+    function clearCode() {
+      code = "";
+      updateDisplay();
+      document.getElementById("message").textContent = "";
+    }
+
+    function checkCode() {
+      if (code === correctCode) {
+        document.getElementById("message").textContent = "✅ Code correct ! Porte ouverte";
+        document.getElementById("message").style.color = "green";
+      } else {
+        document.getElementById("message").textContent = "❌ Code incorrect";
+        document.getElementById("message").style.color = "red";
+      }
+      code = "";
+      updateDisplay();
+    }
+  </script>
+</body>
+</html>
